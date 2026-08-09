@@ -1,0 +1,71 @@
+/* Hallmark · genre: editorial · macrostructure: Marquee Hero · theme: Brutal (light variant)
+ * H1 knobs: size=xxl, alignment=left-bias, underlay=rule-below
+ * nav: N7 Brutal slab · footer: Ft2 Inline rule
+ * tone: utilitarian/industrial · anchor hue: 250 (logo navy)
+ * palette source: images/LOGO.jpg — navy #1a5a99 · sky #5aa9f0 · cyan #009ad9 · coral #f05555
+ * enrichment: none (typography only)
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Sans:wght@400;500&display=swap');
+
+:root {
+  /* --- Fonts --- */
+  --font-display: "Big Shoulders Display", ui-sans-serif, system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Colour — logo navy anchor (~hue 255), light theme --- */
+  --color-paper:    oklch(97.5% 0.006 250);   /* near-white, cool tint    */
+  --color-paper-2:  oklch(94%   0.012 245);   /* pale blue-grey           */
+  --color-rule:     oklch(84%   0.015 248);
+  --color-neutral:  oklch(56%   0.020 250);
+  --color-muted:    oklch(43%   0.035 252);
+  --color-ink:      oklch(24%   0.065 255);   /* deep logo navy as ink    */
+  --color-accent:   oklch(45%   0.130 255);   /* logo navy #1a5a99        */
+  --color-accent-2: oklch(63%   0.130 235);   /* logo cyan #009ad9        */
+  --color-coral:    oklch(64%   0.180 25);    /* logo coral #f05555       */
+  --color-focus:    oklch(55%   0.150 250);
+
+  /* Hero — Premium deep navy gradient */
+  --color-hero-bg:  oklch(24%  0.065 255); /* deep logo navy */
+  --color-hero-ink: oklch(98%  0.005 250); /* white for text */
+  --color-hero-sub: oklch(85%  0.015 250); /* light grey for subtext */
+
+  /* Contact section — soft navy-tinted, still light */
+  --color-dark-bg:  oklch(91%  0.020 248);
+  --color-dark-ink: oklch(24%  0.065 255);
+
+  /* --- Spacing (4pt scale) --- */
+  --space-2xs: 0.25rem;   /*  4px */
+  --space-xs:  0.5rem;    /*  8px */
+  --space-sm:  0.75rem;   /* 12px */
+  --space-md:  1rem;      /* 16px */
+  --space-lg:  1.5rem;    /* 24px */
+  --space-xl:  2rem;      /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4.5rem;    /* 72px */
+  --space-4xl: 7rem;      /* 112px */
+
+  /* --- Type scale (major third 1.25) --- */
+  --text-xs:      0.64rem;
+  --text-sm:      0.8rem;
+  --text-base:    1rem;
+  --text-md:      1.25rem;
+  --text-lg:      1.5625rem;
+  --text-xl:      1.9531rem;
+  --text-2xl:     2.4414rem;
+  --text-3xl:     3.0518rem;
+  --text-4xl:     3.8147rem;
+  --text-display: clamp(3.5rem, 8vw + 1rem, 7rem);
+
+  /* --- Motion --- */
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7,  0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro:   120ms;
+  --dur-short:   220ms;
+  --dur-long:    420ms;
+
+  /* --- Radii --- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
