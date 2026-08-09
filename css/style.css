@@ -10,6 +10,10 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* Better font rendering across platforms */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -19,10 +23,51 @@ body {
   line-height: 1.6;
   color: var(--color-ink);
   background: var(--color-paper);
+  /* Improve text rendering on different platforms */
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings: "liga" 1, "calt" 1;
 }
 
-img { display: block; max-width: 100%; }
-a { color: inherit; }
+img { 
+  display: block; 
+  max-width: 100%; 
+  height: auto;
+  /* Improve image rendering */
+  image-rendering: -webkit-optimize-contrast;
+}
+
+a { 
+  color: inherit; 
+  /* Better tap targets on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Cross-platform improvements */
+.js-enabled .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--dur-long) var(--ease-out),
+    transform var(--dur-long) var(--ease-out);
+}
+
+.js-enabled .reveal.is-visible,
+.no-js .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Safari-specific fixes */
+.is-safari .hero-split__truck {
+  /* Fix transform issues in Safari */
+  transform: translate3d(-5%, 20%, 0);
+}
+
+/* Mac-specific font adjustments */
+.is-mac {
+  /* Slightly adjusted font weights for better Mac rendering */
+  --font-weight-adjust: -50;
+}
 
 /* ─── Utilities ──────────────────────────────────────────────── */
 .container {
@@ -1032,6 +1077,13 @@ a { color: inherit; }
 
 /* ─── Scroll reveal ──────────────────────────────────────────── */
 .reveal {
+  /* Default fallback - visible by default */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Only hide elements if JavaScript is enabled */
+.js-enabled .reveal {
   opacity: 0;
   transform: translateY(12px);
   transition:
@@ -1039,16 +1091,26 @@ a { color: inherit; }
     transform var(--dur-long) var(--ease-out);
 }
 
-.reveal.is-visible {
+.js-enabled .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Ensure visibility for users with reduced motion or if JS fails */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Cross-platform font rendering improvements */
+@supports (font-variation-settings: normal) {
+  .is-mac .nav__title,
+  .is-mac .section__heading,
+  .is-mac .hero-split__display {
+    font-variation-settings: 'wght' 850;
   }
 }
 

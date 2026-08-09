@@ -311,8 +311,19 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer crossorigin="anonymous" 
+          onerror="console.warn('Failed to load GSAP from CDN')"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer crossorigin="anonymous"
+          onerror="console.warn('Failed to load ScrollTrigger from CDN')"></script>
   <script src="js/main.js" defer></script>
+  
+  <!-- Fallback for users without JavaScript -->
+  <noscript>
+    <style>
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .nav__burger { display: none !important; }
+      .nav__links, .nav__cta { display: flex !important; }
+    </style>
+  </noscript>
 </body>
 </html>

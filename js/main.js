@@ -46,13 +46,17 @@ if (sections.length && navLinks.length) {
 // Respect prefers-reduced-motion: skip all GSAP, show everything instantly
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (prefersReduced) {
-  // Make sure nothing stays invisible
-  document.querySelectorAll('.reveal').forEach(el => {
-    el.style.opacity = '1';
-    el.style.transform = 'none';
-  });
-} else if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+// Function to initialize GSAP animations
+function initGSAPAnimations() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.warn('GSAP or ScrollTrigger not loaded, falling back to CSS animations');
+    // Fallback: make everything visible
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
   gsap.registerPlugin(ScrollTrigger);
 
   // ── Hero parallax — photo drifts up as you scroll down ──────
@@ -163,3 +167,85 @@ if (prefersReduced) {
     el.classList.add('is-visible'); // make visible immediately so GSAP takes over
   });
 }
+
+// Handle different loading scenarios for cross-platform compatibility
+if (prefersReduced) {
+  // Make sure nothing stays invisible for users who prefer reduced motion
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+} else {
+  // Wait for GSAP to load with multiple fallback strategies
+  let gsapCheckAttempts = 0;
+  const maxAttempts = 50; // 5 seconds max wait
+  const checkInterval = 100; // Check every 100ms
+
+  function checkGSAPReady() {
+    gsapCheckAttempts++;
+    
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      // GSAP is ready, initialize animations
+      try {
+        initGSAPAnimations();
+      } catch (error) {
+        console.error('Error initializing GSAP animations:', error);
+        // Fallback to showing all elements
+        document.querySelectorAll('.reveal').forEach(el => {
+          el.classList.add('is-visible');
+        });
+      }
+    } else if (gsapCheckAttempts < maxAttempts) {
+      // Continue checking every 100ms
+      setTimeout(checkGSAPReady, checkInterval);
+    } else {
+      // Fallback after 5 seconds - show everything without animation
+      console.warn('GSAP failed to load after 5 seconds, using fallback');
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('is-visible');
+      });
+    }
+  }
+
+  // Multiple initialization strategies for different platforms/browsers
+  
+  // Strategy 1: Check immediately (in case GSAP is already loaded)
+  checkGSAPReady();
+  
+  // Strategy 2: Wait for DOM to be fully loaded (Safari compatibility)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkGSAPReady);
+  }
+  
+  // Strategy 3: Wait for window load event (network resource loading)
+  window.addEventListener('load', () => {
+    // If GSAP still isn't ready after window load, give it one more chance
+    setTimeout(checkGSAPReady, 100);
+  });
+}
+
+// ── Cross-platform CSS fallbacks ─────────────────────────────
+// Add CSS classes for better cross-platform support
+document.documentElement.classList.add('js-enabled');
+
+// Detect Safari for specific workarounds
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+if (isSafari) {
+  document.documentElement.classList.add('is-safari');
+}
+
+// Detect macOS for platform-specific styling
+const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+if (isMac) {
+  document.documentElement.classList.add('is-mac');
+}
+
+// ── Enhanced error handling ──────────────────────────────────
+window.addEventListener('error', (event) => {
+  console.error('JavaScript error:', event.error);
+  // Ensure content is visible even if scripts fail
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+});
