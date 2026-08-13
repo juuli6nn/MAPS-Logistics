@@ -875,29 +875,26 @@ a {
 @media (min-width: 768px) {
   .footer-wave__columns {
     display: grid;
-    grid-template-columns: 35% 30% 35%;
-    gap: 0;
+    grid-template-columns: 1fr 1fr; /* 50% | 50% allocation */
+    gap: var(--space-2xl);
+    align-items: stretch;
   }
 }
 
 .footer-wave__col {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
-  .footer-wave__col--center {
-    padding-inline: var(--space-xl);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  .footer-wave__col--brand {
+    padding-right: var(--space-2xl);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .footer-wave__col--brand {
-    padding-right: var(--space-xl);
-  }
   .footer-wave__col--map {
-    padding-left: var(--space-xl);
+    padding-left: var(--space-md);
   }
 }
 
@@ -922,12 +919,58 @@ a {
 
 .footer-wave__heading {
   font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  font-weight: 900;
+  margin-bottom: 12px;
   color: var(--color-paper);
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
+  line-height: 1.05;
+}
+
+.footer-wave__subtext {
+  color: #a8b2d1;
+  font-size: 1.0625rem;
+  margin-bottom: 28px;
+  line-height: 1.6;
+  max-width: 540px;
+}
+
+.footer-wave__actions {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.footer-wave__actions .btn {
+  padding: 14px 28px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.footer-wave__meta {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: flex-start;
+}
+
+.meta-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-accent-2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.meta-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-paper);
 }
 
 .footer-wave__contact-list {
@@ -1023,10 +1066,10 @@ a {
 .footer-wave__map-wrapper {
   width: 100%;
   height: 100%;
-  min-height: 250px;
-  border-radius: 8px;
+  min-height: 340px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
 .footer-wave__bottom {
