@@ -370,7 +370,7 @@ a {
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
-  z-index: 10;
+  z-index: 15;
   pointer-events: none;
 }
 
@@ -1291,37 +1291,43 @@ a {
   .nav__cta { display: none; }
   .nav__burger { display: flex; }
 
-  .hero-split__inner {
-    flex-direction: column;
-    text-align: center;
-    padding-top: var(--space-4xl);
-    padding-bottom: 30vh;
-    z-index: 20;
-  }
-
-  .hero-split__content {
-    max-width: 100%;
-  }
-
-  .hero-split__eyebrow, .hero-split__sub {
-    margin-inline: auto;
-  }
-
-  .hero-split__display {
-    font-size: var(--text-3xl);
-  }
-
-  .hero-split__graphic {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero-split__truck {
-    width: 85%;
-    max-width: 400px;
-    margin-left: 0;
-    transform: none;
-  }
+  .hero-split {
+      min-height: auto;
+      align-items: flex-start;
+      padding-top: var(--space-xl);
+    }
+    .hero-split__inner {
+      flex-direction: column;
+      text-align: center;
+      padding-top: var(--space-4xl);
+      padding-bottom: var(--space-md);
+      z-index: 20;
+    }
+    .hero-split__content {
+      max-width: 100%;
+      margin-bottom: var(--space-lg);
+    }
+    .hero-split__eyebrow, .hero-split__sub {
+      margin-inline: auto;
+    }
+    .hero-split__display {
+      font-size: 2.75rem;
+      margin-top: var(--space-md);
+    }
+    .hero-split__graphic {
+      position: relative;
+      width: 100%;
+      height: auto;
+      justify-content: center;
+      margin-top: -8vw;
+      z-index: 10;
+    }
+    .hero-split__truck {
+      width: 90%;
+      max-width: 400px;
+      margin-left: 0;
+      transform: none;
+    }
 
   .about-split__container {
     flex-direction: column;
