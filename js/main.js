@@ -43,55 +43,115 @@ if (sections.length && navLinks.length) {
 }
 
 // ── GSAP ScrollTrigger animations ────────────────────────────
-// Respect prefers-reduced-motion: skip all GSAP, show everything instantly
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Function to initialize GSAP animations
 function initGSAPAnimations() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    console.warn('GSAP or ScrollTrigger not loaded, falling back to CSS animations');
-    // Fallback: make everything visible
-    document.querySelectorAll('.reveal').forEach(el => {
-      el.classList.add('is-visible');
-    });
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
     return;
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time)=>{
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0, 0);
 
-  // ── Hero parallax — photo drifts up as you scroll down ──────
-  const heroPhoto = document.querySelector('.hero__photo');
-  if (heroPhoto) {
-    gsap.to(heroPhoto, {
-      backgroundPositionY: '75%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-      },
+    // Intercept anchor links for smooth scrolling via Lenis
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId !== '#') {
+          e.preventDefault();
+          lenis.scrollTo(targetId, { duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        }
+      });
     });
   }
 
-  // ── About — media from left, body from right ─────────────────
-  const aboutMedia = document.querySelector('.about__media');
-  const aboutBody  = document.querySelector('.about__body');
-  if (aboutMedia && aboutBody) {
+
+  // ── Hero animations ────────────────────────────────────────────
+  const heroBg = document.querySelector('.hero-split__bg');
+  const heroContent = document.querySelector('.hero-split__content');
+  const heroTruck = document.querySelector('.hero-split__truck');
+  
+  if (heroContent && heroTruck) {
+    const heroTl = gsap.timeline();
+    
+    // Entrance animations
+    heroTl
+      .fromTo(heroBg, 
+        { scale: 1.1, opacity: 0 }, 
+        { scale: 1, opacity: 0.25, duration: 1.5, ease: 'expo.out' })
+      .fromTo(heroContent.children,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'expo.out' },
+        '-=1.0')
+      .fromTo(heroTruck,
+        { x: 100, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out' },
+        '-=0.8');
+
+    // Scroll parallax for background
+    if (heroBg) {
+      gsap.to(heroBg, {
+        backgroundPositionY: '30%',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-split',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
+    }
+  }
+
+  // ── About — split panel fade + slide ────────────────────────
+  const aboutMedia = document.querySelector('.about-split__media');
+  const aboutPanel = document.querySelector('.about-split__panel');
+  const counters = document.querySelectorAll('.counter');
+  if (aboutMedia && aboutPanel) {
     const aboutTl = gsap.timeline({
       scrollTrigger: {
         trigger: '#about',
         start: 'top 88%',
-        end: 'top 22%',
-        scrub: 0.8,
+        toggleActions: 'play none none reverse',
       },
     });
     aboutTl
-      .from(aboutMedia, { x: -48, opacity: 0, duration: 0.8, ease: 'power2.out' })
-      .from(aboutBody,  { x:  48, opacity: 0, duration: 0.8, ease: 'power2.out' }, '<0.15');
+      .fromTo([aboutMedia, aboutPanel],
+            { y: 80, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.2, ease: 'expo.out', stagger: 0.15 });
+
+    if (counters.length) {
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'), 10);
+        let obj = { val: 0 };
+        aboutTl.to(obj, {
+          val: target,
+          duration: 1.5,
+          ease: "expo.out",
+          onUpdate: function() {
+            counter.innerText = Math.ceil(obj.val);
+          }
+        }, "<0.3");
+      });
+    }
   }
 
-  // ── Services — heading then cards staggered ──────────────────
+  // ── Services ─────────────────────────────────────────────────
   const servicesHeader = document.querySelector('.services-header');
   const serviceCards   = document.querySelectorAll('.pg-service-card');
   if (servicesHeader && serviceCards.length) {
@@ -99,16 +159,20 @@ function initGSAPAnimations() {
       scrollTrigger: {
         trigger: '#services',
         start: 'top 88%',
-        end: 'top 18%',
-        scrub: 0.8,
+        toggleActions: 'play none none reverse',
       },
     });
     servicesTl
-      .from(servicesHeader, { y: 32, opacity: 0, duration: 0.6, ease: 'power2.out' })
-      .from(serviceCards,   { y: 40, opacity: 0, duration: 0.55, stagger: 0.12, ease: 'power2.out' }, '<0.2');
+      .fromTo(servicesHeader,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'expo.out' })
+      .fromTo(serviceCards,
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.0, stagger: 0.12, ease: 'expo.out' },
+        '<0.2');
   }
 
-  // ── Goals — left column fades in, then numbered items stagger ─
+  // ── Goals ────────────────────────────────────────────────────
   const goalsCardLeft  = document.querySelector('.goals-card__left');
   const goalsCardRight = document.querySelector('.goals-card__right');
   const goalsItems     = document.querySelectorAll('.goals__numbered li');
@@ -117,17 +181,24 @@ function initGSAPAnimations() {
       scrollTrigger: {
         trigger: '#goals',
         start: 'top 88%',
-        end: 'top 18%',
-        scrub: 0.8,
+        toggleActions: 'play none none reverse',
       },
     });
     goalsTl
-      .from(goalsCardLeft,  { x: -40, opacity: 0, duration: 0.7, ease: 'power2.out' })
-      .from(goalsCardRight, { x:  40, opacity: 0, duration: 0.7, ease: 'power2.out' }, '<0.1')
-      .from(goalsItems,     { x: 24, opacity: 0, duration: 0.5, stagger: 0.11, ease: 'power2.out' }, '<0.2');
+      .fromTo(goalsCardLeft,
+        { x: -80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.2, ease: 'expo.out' })
+      .fromTo(goalsCardRight,
+        { x: 80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.2, ease: 'expo.out' },
+        '<0.1')
+      .fromTo(goalsItems,
+        { x: 24, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.0, stagger: 0.11, ease: 'expo.out' },
+        '<0.2');
   }
 
-  // ── Activities — text from left, fb preview from right ───────
+  // ── Activities ───────────────────────────────────────────────
   const activitiesText    = document.querySelector('.activities__text');
   const activitiesPreview = document.querySelector('.activities__preview');
   if (activitiesText && activitiesPreview) {
@@ -135,117 +206,114 @@ function initGSAPAnimations() {
       scrollTrigger: {
         trigger: '#activities',
         start: 'top 88%',
-        end: 'top 22%',
-        scrub: 0.8,
+        toggleActions: 'play none none reverse',
       },
     });
     activitiesTl
-      .from(activitiesText,    { x: -48, opacity: 0, duration: 0.75, ease: 'power2.out' })
-      .from(activitiesPreview, { x:  48, opacity: 0, duration: 0.75, ease: 'power2.out' }, '<0.15');
+      .fromTo(activitiesText,
+        { x: -80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.25, ease: 'expo.out' })
+      .fromTo(activitiesPreview,
+        { x: 80, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.25, ease: 'expo.out' },
+        '<0.15');
   }
 
-  // ── Footer contact columns — staggered fade-up ───────────────
+  // ── Footer columns ───────────────────────────────────────────
   const footerCols = document.querySelectorAll('.footer-wave__col');
   if (footerCols.length) {
-    gsap.from(footerCols, {
-      y: 36,
-      opacity: 0,
-      duration: 0.65,
-      stagger: 0.14,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.footer-wave',
-        start: 'top 90%',
-        end: 'top 30%',
-        scrub: 0.8,
-      },
-    });
+    gsap.fromTo(footerCols,
+      { y: 60, opacity: 0 },
+      {
+        y: 0, opacity: 1,
+        duration: 1.25,
+        stagger: 0.14,
+        ease: 'expo.out',
+        scrollTrigger: {
+          trigger: '.footer-wave',
+          start: 'top 90%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
   }
 
-  // ── Remove CSS reveal class (GSAP handles everything now) ────
-  document.querySelectorAll('.reveal').forEach(el => {
-    el.classList.add('is-visible'); // make visible immediately so GSAP takes over
-  });
+  // Reveal CSS-based elements immediately (GSAP handles opacity now)
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+
+  // Recalculate after layout settles (fixes hash-navigation initial state)
+  requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
-// Handle different loading scenarios for cross-platform compatibility
 if (prefersReduced) {
-  // Make sure nothing stays invisible for users who prefer reduced motion
   document.querySelectorAll('.reveal').forEach(el => {
     el.style.opacity = '1';
     el.style.transform = 'none';
   });
 } else {
-  // Wait for GSAP to load with multiple fallback strategies
-  let gsapCheckAttempts = 0;
-  const maxAttempts = 50; // 5 seconds max wait
-  const checkInterval = 100; // Check every 100ms
-
-  function checkGSAPReady() {
-    gsapCheckAttempts++;
-    
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      // GSAP is ready, initialize animations
-      try {
+  // GSAP scripts load synchronously before this file — should be ready immediately
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    initGSAPAnimations();
+  } else {
+    // Fallback: wait for DOM ready then try once more
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         initGSAPAnimations();
-      } catch (error) {
-        console.error('Error initializing GSAP animations:', error);
-        // Fallback to showing all elements
-        document.querySelectorAll('.reveal').forEach(el => {
-          el.classList.add('is-visible');
-        });
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
       }
-    } else if (gsapCheckAttempts < maxAttempts) {
-      // Continue checking every 100ms
-      setTimeout(checkGSAPReady, checkInterval);
-    } else {
-      // Fallback after 5 seconds - show everything without animation
-      console.warn('GSAP failed to load after 5 seconds, using fallback');
-      document.querySelectorAll('.reveal').forEach(el => {
-        el.classList.add('is-visible');
-      });
-    }
+    });
   }
-
-  // Multiple initialization strategies for different platforms/browsers
-  
-  // Strategy 1: Check immediately (in case GSAP is already loaded)
-  checkGSAPReady();
-  
-  // Strategy 2: Wait for DOM to be fully loaded (Safari compatibility)
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', checkGSAPReady);
-  }
-  
-  // Strategy 3: Wait for window load event (network resource loading)
-  window.addEventListener('load', () => {
-    // If GSAP still isn't ready after window load, give it one more chance
-    setTimeout(checkGSAPReady, 100);
-  });
 }
 
-// ── Cross-platform CSS fallbacks ─────────────────────────────
-// Add CSS classes for better cross-platform support
+// Refresh ScrollTrigger after all resources load (catches hash-scroll offset)
+window.addEventListener('load', () => {
+  if (typeof ScrollTrigger !== 'undefined') {
+    setTimeout(() => ScrollTrigger.refresh(), 150);
+  }
+});
+
+// ── Platform detection ────────────────────────────────────────
 document.documentElement.classList.add('js-enabled');
 
-// Detect Safari for specific workarounds
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-if (isSafari) {
-  document.documentElement.classList.add('is-safari');
-}
+if (isSafari) document.documentElement.classList.add('is-safari');
 
-// Detect macOS for platform-specific styling
 const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-if (isMac) {
-  document.documentElement.classList.add('is-mac');
-}
+if (isMac) document.documentElement.classList.add('is-mac');
 
-// ── Enhanced error handling ──────────────────────────────────
-window.addEventListener('error', (event) => {
-  console.error('JavaScript error:', event.error);
-  // Ensure content is visible even if scripts fail
+// ── Global error fallback ─────────────────────────────────────
+window.addEventListener('error', () => {
   document.querySelectorAll('.reveal').forEach(el => {
     el.style.opacity = '1';
     el.style.transform = 'none';
   });
+});
+
+// └└└ Modal Logic ─────────────────────────────────────────────────
+const modalTriggers = document.querySelectorAll('.js-modal-trigger');
+const modalCloses = document.querySelectorAll('.js-modal-close');
+const quoteModal = document.getElementById('quoteModal');
+
+function openModal(e) {
+  if (e) e.preventDefault();
+  quoteModal.classList.add('is-open');
+  quoteModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeModal(e) {
+  if (e) e.preventDefault();
+  quoteModal.classList.remove('is-open');
+  quoteModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+modalTriggers.forEach(q => q.addEventListener('click', openModal));
+modalCloses.forEach(q => q.addEventListener('click', closeModal));
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && quoteModal.classList.contains('is-open')) {
+    closeModal();
+  }
 });

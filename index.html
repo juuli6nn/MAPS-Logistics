@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MAPS Logistics — Reliable Trucking &amp; Freight Services</title>
+  <title>MAPS Logistics</title>
   <meta name="description" content="MAPS Logistics provides dependable trucking, freight hauling, and logistics services. Contact us for inquiries." />
   <link rel="icon" type="image/svg+xml" href="images/logo-symbol.svg" />
   <link rel="icon" type="image/png" href="images/favicon.png" />
@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=2" />
 </head>
 <body>
 
@@ -45,17 +45,18 @@
 
   <!-- HERO — Split Layout with 3D Graphic -->
   <section class="hero-split">
-    <div class="hero-split__bg" aria-hidden="true"></div>
+    <div class="hero-split__bg-wrap">
+      <div class="hero-split__bg" aria-hidden="true"></div>
+    </div>
     <div class="container hero-split__inner">
       <div class="hero-split__content">
-        <span class="hero-split__eyebrow">Lorem Ipsum Dolor</span>
-        <h1 class="hero-split__display">YOUR TRUSTED PARTNER FOR TRUCKING</h1>
-        <p class="hero-split__sub">MAPS Logistics Services is committed to getting your goods where they need to go, when they need to get there. Contact us today for more information on our company and trucking services.</p>
-        <a href="#contact" class="btn btn--coral btn--shadow">KNOW MORE</a>
+        <h1 class="hero-split__display">YOUR TRUSTED PARTNER<br>FOR TRUCKING</h1>
+        <p class="hero-split__sub">MAPS Logistics Services is committed to getting your goods where they need to go, when they need to get there.</p>
+        <a href="#about" class="btn btn--coral btn--shadow">KNOW MORE</a>
       </div>
-      <div class="hero-split__graphic">
-        <img src="images/hero-truck-graphic.png" alt="MAPS Delivery Truck" class="hero-split__truck" />
-      </div>
+    </div>
+    <div class="hero-split__graphic">
+      <img src="images/hero-truck-graphic.png" alt="MAPS Delivery Truck" class="hero-split__truck" />
     </div>
     
     <!-- Slanted Bottom Edge -->
@@ -64,19 +65,37 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="container reveal">
-      <div class="about__grid">
-        <div class="about__media">
-          <img src="images/PHOTO1.jpg" alt="MAPS Logistics Services truck fleet" loading="lazy" />
-        </div>
-        <div class="about__body">
-          <span class="label-tag">About Us</span>
-          <h2 class="section__heading">Built on reliability,<br>driven by commitment.</h2>
-          <p>In the new post-pandemic age, global trade and local commerce are thriving, and businesses are constantly exchanging commodities. To ensure smooth operations, an efficient trucking partner is essential for the final leg of the supply chain. MAPS LOGISTICS SERVICES is here to provide that crucial support. We specialize in offering dependable, last-mile transportation solutions that meet the evolving needs of modern businesses. Whether you're a retailer, manufacturer, or distributor, we are your trusted partner to ensure timely and secure delivery of goods.</p>
-          <p>MAPS LOGISTICS SERVICES was founded in 2023, with a vision to offer reliable, efficient trucking services that meet the growing demands of a dynamic marketplace. From humble beginnings, we have expanded our fleet and service offerings to become a leading player in the trucking and logistics industry. Over the years, we have built a reputation for excellence, expanding our reach to meet the logistics needs of businesses across diverse sectors.</p>
-        </div>
+  <section class="section about-split" id="about">
+    <div class="about-split__container">
+
+      <!-- Left: Photo -->
+      <div class="about-split__media">
+        <img src="images/PHOTO1.webp" alt="MAPS Logistics Services truck fleet" loading="lazy" />
       </div>
+
+      <!-- Right: Blue panel with content -->
+      <div class="about-split__panel">
+        <h2 class="about-split__heading">Timely and secure delivery.</h2>
+        <p class="about-split__text">MAPS Logistics Services provides dependable, last-mile transportation solutions to ensure smooth operations for your supply chain.</p>
+
+        <div class="about-split__stats">
+          <div class="about-stat">
+            <div class="about-stat__number"><span class="counter" data-target="3">0</span>+</div>
+            <div class="about-stat__label">Years In<br>Business</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat__number"><span class="counter" data-target="25">0</span></div>
+            <div class="about-stat__label">Satisfied &<br>Repeat Clients</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat__number"><span class="counter" data-target="790">0</span></div>
+            <div class="about-stat__label">Loads<br>Moved Annually</div>
+          </div>
+        </div>
+
+        <p class="about-split__tagline">Whether you're a retailer, manufacturer, or distributor, we offer dependable, last-mile transportation solutions that meet the evolving needs of modern businesses.</p>
+      </div>
+
     </div>
   </section>
 
@@ -128,7 +147,6 @@
 
         <!-- Left: heading block -->
         <div class="goals-card__left">
-          <span class="label-tag">Goals &amp; Objectives</span>
           <h2 class="section__heading">Where we're<br>headed.</h2>
           <p class="goals-overlay-subtitle">In the next 5 years, <strong>MAPS LOGISTICS SERVICES</strong> aims to grow, innovate, and strengthen its position in the industry.</p>
         </div>
@@ -164,11 +182,13 @@
     <div class="container reveal">
       <div class="activities__grid">
         <div class="activities__text">
-          <span class="label-tag">Latest Activity</span>
           <h2 class="section__heading">Follow our journey</h2>
           <p>We operate within the Logistics and Transportation industry, specifically specializing in last-mile delivery and freight transport. Our services support businesses in retail, manufacturing, e-commerce, and other sectors that require efficient and reliable trucking services to meet the demands of their supply chain operations.</p>
           <p>Stay updated with our latest deliveries, announcements, and news. Follow us on Facebook for real-time updates from the road.</p>
-          <a href="https://www.facebook.com/YOUR_PAGE_HERE" target="_blank" rel="noopener" class="btn btn--outline">Follow on Facebook ↗</a>
+          <a href="https://www.facebook.com/profile.php?id=61552672501838" target="_blank" rel="noopener" class="btn btn--outline" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+            Follow on Facebook ↗
+          </a>
         </div>
         <div class="activities__preview">
           <a href="https://www.facebook.com/profile.php?id=61552672501838" target="_blank" rel="noopener" class="browser-mockup">
@@ -180,7 +200,7 @@
               <div class="fb-ui__page">
                 <div class="fb-ui__page-header">
                   <div class="fb-ui__cover">
-                    <img src="images/HEADER.jpg" alt="Cover" />
+                    <img src="images/HEADER.webp" alt="Cover" />
                   </div>
                   <div class="fb-ui__profile">
                     <div class="fb-ui__avatar">
@@ -239,70 +259,189 @@
         <path d="M0,60 C320,120 420,0 720,60 C1020,120 1120,0 1440,60 L1440,120 L0,120 Z"></path>
       </svg>
     </div>
-    
+
     <div class="footer-wave__container">
       <div class="footer-wave__columns">
-        
-        <!-- Column 1: Ready to Move (50% Allocation - Enlarged) -->
-        <div class="footer-wave__col footer-wave__col--brand">
-          <h4 class="footer-wave__heading">READY TO MOVE?</h4>
-          <p class="footer-wave__subtext">
-            Reach out through Facebook or email — we respond promptly to all inquiries and container transport bookings.
-          </p>
-          
-          <div class="footer-wave__actions">
-            <a href="https://m.me/YOUR_PAGE_HERE" target="_blank" rel="noopener" class="btn btn--primary">Message us on Facebook</a>
-            <a href="mailto:booking@maps-logistics.com" class="btn btn--outline">Send us an email</a>
-          </div>
 
-          <div class="footer-wave__meta">
-            <div>
-              <div class="meta-label">Phone</div>
-              <div class="meta-value">0917.182.MAPS</div>
+        <!-- Column 1: Contact Form (70%) -->
+        <div class="footer-wave__col footer-wave__col--brand">
+          <div class="footer-contact-form">
+
+            <!-- Left info panel -->
+            <div class="footer-form__info">
+              <h2 class="footer-form__heading">READY TO<br>MOVE?</h2>
+              <div class="footer-form__details">
+                <div>
+                  <div class="footer-form__detail-label">Email</div>
+                  <a href="mailto:booking@maps-logistics.com" class="footer-form__detail-value">booking@maps-logistics.com</a>
+                </div>
+                <div>
+                  <div class="footer-form__detail-label">Phone</div>
+                  <a href="tel:09171826277" class="footer-form__detail-value">0917 182 6277</a>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="meta-label">Email</div>
-              <div class="meta-value">booking@maps-logistics.com</div>
+
+            <!-- Right form fields -->
+            <div class="footer-form__fields">
+              <!-- Web3Forms Integration -->
+              <form action="https://api.web3forms.com/submit" method="POST" class="footer-form" id="contact-form">
+                
+                <!-- Web3Forms hidden configuration fields -->
+                <input type="hidden" name="access_key" value="8424d7f6-23d2-42c5-addf-81ce380483d5">
+                <input type="hidden" name="subject" value="New Contact from MAPS Logistics Website">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                
+                <div class="footer-form__row">
+                  <div class="footer-form__field">
+                    <label for="ff-name">Name</label>
+                    <input type="text" id="ff-name" name="name" placeholder="John Doe" required />
+                  </div>
+                  <div class="footer-form__field">
+                    <label for="ff-email">Email</label>
+                    <input type="email" id="ff-email" name="email" placeholder="contact@email.com" required />
+                  </div>
+                </div>
+                <div class="footer-form__row">
+                  <div class="footer-form__field">
+                    <label for="ff-phone">Phone</label>
+                    <input type="tel" id="ff-phone" name="phone" placeholder="+63 9XX XXX XXXX" />
+                  </div>
+                  <div class="footer-form__field">
+                    <label for="ff-company">Company</label>
+                    <input type="text" id="ff-company" name="company" placeholder="Add Company" />
+                  </div>
+                </div>
+                <div class="footer-form__field">
+                  <label for="ff-message">Message</label>
+                  <textarea id="ff-message" name="message" placeholder="Please type your message here..." rows="4" required></textarea>
+                </div>
+                <button type="submit" class="footer-form__submit">Get in Touch</button>
+                <div style="text-align: center; margin-top: 15px;">
+                  <button type="button" onclick="openSuccessModal()" class="btn btn--outline" style="width: 100%; border: 1px dashed rgba(255,255,255,0.4); color: white; background: transparent; transition: background 0.2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">
+                    WHAT WILL POP UP IF YOU SEND THE FORM
+                  </button>
+                </div>
+              </form>
             </div>
-            <div>
-              <div class="meta-label">Website</div>
-              <div class="meta-value">www.maps-logistics.com</div>
-            </div>
+
           </div>
         </div>
-        
-        <!-- Column 2: Google Map (50% Allocation) -->
+
+        <!-- Column 2: Google Map (30%) -->
         <div class="footer-wave__col footer-wave__col--map">
           <div class="footer-wave__map-wrapper">
-            <iframe 
-              src="https://maps.google.com/maps?q=875%20Radial%20Road%2010,%20Tondo,%20Philippines,%201018&t=&z=13&ie=UTF8&iwloc=&output=embed" 
-              width="100%" 
-              height="100%" 
-              style="border:0;" 
-              allowfullscreen="" 
-              loading="lazy" 
+            <iframe
+              src="https://maps.google.com/maps?q=F.%20Bautista%20St,%20Ugong,%20Valenzuela,%20Metro%20Manila,%20Philippines&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
         </div>
-        
+
       </div>
     </div>
-    
+
     <!-- Footer Bottom -->
     <div class="footer-wave__bottom">
       <div class="footer-wave__bottom-container" style="justify-content: center;">
-        <p>&copy; 2024 MAPS Logistics Services | All Rights Reserved</p>
+        <p>&copy; <span id="year">2026</span> MAPS Logistics Services | All Rights Reserved</p>
       </div>
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer crossorigin="anonymous" 
-          onerror="console.warn('Failed to load GSAP from CDN')"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer crossorigin="anonymous"
-          onerror="console.warn('Failed to load ScrollTrigger from CDN')"></script>
-  <script src="js/main.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js" crossorigin="anonymous"></script>
+  <script src="js/main.js?v=2" defer></script>
   
+  <!-- Success Modal Styles -->
+  <style>
+    .modal-btn {
+      background: #0f172a; color: white; border: none; padding: 14px 30px; font-size: 1.4rem; font-weight: 700; border-radius: 8px; cursor: pointer; font-family: 'Big Shoulders Display', sans-serif; width: 100%; text-transform: uppercase; letter-spacing: 1px;
+    }
+  </style>
+
+  <!-- Success Modal Overlay (Hidden by default) -->
+  <div id="success-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.75); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(5px); opacity: 0; transition: opacity 0.3s ease;">
+    <div id="success-modal-card" style="background: white; border-radius: 16px; padding: 40px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); transform: translateY(20px); transition: transform 0.3s ease;">
+      <img src="images/logo-symbol.svg" alt="MAPS Logistics Logo" style="display: block; margin: 0 auto 25px auto; width: 110px; height: 110px; object-fit: contain; transform: translateX(-12px);" />
+      <h3 style="font-size: 2.8rem; color: #111827; font-family: 'Big Shoulders Display', sans-serif; margin-bottom: 15px; line-height: 1.1; text-transform: uppercase;">Message Delivered!</h3>
+      <p style="color: #4b5563; font-size: 1.1rem; line-height: 1.5; font-family: 'IBM Plex Sans', sans-serif; margin-bottom: 30px;">Thanks for reaching out. Our dispatch team has received your details and will get back to you shortly with a quote.</p>
+      <button onclick="closeSuccessModal()" class="modal-btn">Back to MAPS Logistics</button>
+    </div>
+  </div>
+
+  <!-- Web3Forms Custom Submit Script -->
+  <script>
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+    function openSuccessModal() {
+      const modal = document.getElementById('success-modal');
+      const card = document.getElementById('success-modal-card');
+      modal.style.display = 'flex';
+      // Tiny delay to allow CSS transitions to work after changing display from none
+      setTimeout(() => {
+        modal.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 10);
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('success-modal');
+      const card = document.getElementById('success-modal-card');
+      modal.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Stops the page from redirecting
+      
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = 'Sending...';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(contactForm);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(async (response) => {
+        if (response.status == 200) {
+          // Clear the form fields and show the beautiful new modal!
+          contactForm.reset();
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+          openSuccessModal();
+        } else {
+          alert('Something went wrong! Please try again.');
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        alert('Something went wrong! Please check your connection.');
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+      });
+    });
+  </script>
   <!-- Fallback for users without JavaScript -->
   <noscript>
     <style>
