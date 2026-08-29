@@ -1292,41 +1292,42 @@ a {
   .nav__burger { display: flex; }
 
   .hero-split {
-      min-height: auto;
+      min-height: 85vh;
       align-items: flex-start;
       padding-top: var(--space-xl);
     }
     .hero-split__inner {
       flex-direction: column;
       text-align: center;
-      padding-top: var(--space-4xl);
-      padding-bottom: var(--space-md);
+      padding-top: var(--space-2xl);
+      padding-bottom: 55vw;
       z-index: 20;
     }
     .hero-split__content {
       max-width: 100%;
-      margin-bottom: var(--space-lg);
+      margin-bottom: 0;
     }
     .hero-split__eyebrow, .hero-split__sub {
       margin-inline: auto;
     }
     .hero-split__display {
       font-size: 2.75rem;
-      margin-top: var(--space-md);
+      margin-top: 0;
     }
     .hero-split__graphic {
-      position: relative;
+      position: absolute;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: auto;
       justify-content: center;
-      margin-top: -8vw;
       z-index: 10;
     }
     .hero-split__truck {
       width: 90%;
-      max-width: 400px;
+      max-width: 450px;
       margin-left: 0;
-      transform: none;
+      transform: translateY(15%);
     }
 
   .about-split__container {
