@@ -1695,3 +1695,8 @@ a {
   }
 }
 
+
+.phone-input-wrap { position: relative; display: flex; align-items: center; width: 100%; }
+.phone-prefix { position: absolute; left: 13px; font-family: var(--font-body); font-size: 0.9rem; color: var(--color-ink); font-weight: 500; pointer-events: none; opacity: 0.7; }
+.phone-input-wrap input { width: 100%; padding-left: 72px !important; }
+
